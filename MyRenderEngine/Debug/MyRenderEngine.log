@@ -1,0 +1,2 @@
+﻿  Application.cpp
+D:\-DYDDV - URJC\dev\Motor de Render\MyRenderEngine\MyRenderEngine\src\Application.cpp(1,10): fatal error C1083: No se puede abrir el archivo incluir: 'GLFW/glfw3.h': No such file or directory
