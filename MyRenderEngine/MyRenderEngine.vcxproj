@@ -264,6 +264,7 @@
     <None Include="src\Shaders\shader.fs" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\glm\common.hpp" />
     <ClInclude Include="src\glm\detail\func_common.hpp" />
     <ClInclude Include="src\glm\detail\func_exponential.hpp" />

@@ -1,14 +1,12 @@
 ﻿  Application.cpp
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(26,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(26,36): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(242,28): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(332,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(333,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(338,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(339,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(340,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\MyRenderEngine\src\Application.cpp(341,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-LINK : warning LNK4098: la biblioteca predeterminada'LIBCMT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-LINK : warning LNK4098: la biblioteca predeterminada'MSVCRT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-glew32s.lib(glew.obj) : warning LNK4099: no se encontró PDB 'vc120.pdb' con 'glew32s.lib(glew.obj)' o en 'D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\x64\Debug\vc120.pdb'; se vinculará el objeto sin tener en cuenta información de depuración
-  MyRenderEngine.vcxproj -> D:\-DYDDV - URJC\dev\Motor de Render\Git\MyRenderEngine\x64\Debug\MyRenderEngine.exe
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(25,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(25,36): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(240,28): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(330,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(331,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(335,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(336,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(337,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(338,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(344,31): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+  MyRenderEngine.vcxproj -> C:\Users\javis\Desktop\MyRenderEngine\x64\Debug\MyRenderEngine.exe
