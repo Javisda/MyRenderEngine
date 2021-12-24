@@ -9,6 +9,8 @@
 
 #include "Shader.h"
 #include "Camera.h"
+#include "Objects/Cube.h"
+#include "TextureLoader.h"
 
 
 using namespace std;
@@ -25,6 +27,8 @@ float lastFrame = 0.0f; // Time of last frame
 float lastX = windowWidth/2, lastY = windowHeight/2; // Center of the window
 bool firstMouse = true;
 
+// Objects 
+Cube cube;
 
 
 // Funtion headers
@@ -38,7 +42,6 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 int main(void)
 {
     GLFWwindow* window;
-
 
     /* Initialize the library */
     if (!glfwInit())
@@ -66,51 +69,10 @@ int main(void)
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // This captures (stays within the center of the window) the cursor and hide it once the application has focus.
 
     // Creating the shaders
-    Shader ourShader("src/Shaders/shader.vs", "src/Shaders/shader.fs");
+    Shader simpleShader("src/Shaders/shader.vs", "src/Shaders/shader.fs");
+    Shader lightShader("src/Shaders/lightShader.vs", "src/Shaders/lightShader.fs");
 
 
-    float vertices[] = {
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-         0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f, 0.0f, 1.0f
-    };
-    //unsigned int indices[] = { // note that we start from 0!
-        //0, 1, 2, // first triangle
-        //0, 2, 3
-    //};
     glm::vec3 cubePositions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
         glm::vec3(2.0f, 5.0f, -15.0f),
@@ -127,57 +89,18 @@ int main(void)
 
     // TEXTURE
     stbi_set_flip_vertically_on_load(true); // We assure all images are flipped correctly. (Nees to be call before any texture loading)
-    // 1º TEXTURE
-        // load and generate the texture
-        int width, height, nrChannels;
-        unsigned char* data = stbi_load("src/Textures/wall.jpg", &width, &height, &nrChannels, 0);
-
-        unsigned int texture1;
-        glGenTextures(1, &texture1);
-        glBindTexture(GL_TEXTURE_2D, texture1);
-        // set the texture wrapping/filtering options (on currently bound texture)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        if (data)
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-        }
-        else
-        {
-            std::cout << "Failed to load texture" << std::endl;
-        }
-        stbi_image_free(data);
-
-    // 2º TEXTURE
-        data = stbi_load("src/Textures/goofy.png", &width, &height, &nrChannels, 0);
-        unsigned int texture2;
-        glGenTextures(1, &texture2);
-        glBindTexture(GL_TEXTURE_2D, texture2);
-        // set the texture wrapping/filtering options (on currently bound texture)
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        if (data)
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-            glGenerateMipmap(GL_TEXTURE_2D);
-        }
-        else
-        {
-            std::cout << "Failed to load texture" << std::endl;
-        }
-        stbi_image_free(data);
-
-        // Setting up the next, we make sure each uniform sampler correspond to the proper texture unit
-        ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
-        ourShader.setInt("texture1", 0);
-        ourShader.setInt("texture2", 1);
-
     
+    // load and generate the texture
+    TextureLoader* tex1 = new TextureLoader("src/Textures/wall.jpg");
+    unsigned int texture1 = tex1->generateSimpleRGBTexture();
+
+    TextureLoader* tex2 = new TextureLoader("src/Textures/goofy.png");
+    unsigned int texture2 = tex2->generateSimpleRGBATexture();
+
+    // Setting up the next, we make sure each uniform sampler correspond to the proper texture unit
+    simpleShader.use(); // don't forget to activate/use the shader before setting uniforms!
+    simpleShader.setInt("texture1", 0);
+    simpleShader.setInt("texture2", 1);
 
 
     unsigned int VAO;
@@ -193,7 +116,7 @@ int main(void)
     glBindVertexArray(VAO);
     // 2. copy our vertices array in a buffer for OpenGL to use
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube.vertices), cube.vertices, GL_STATIC_DRAW);
     // 3. copy our index array in a element buffer for OpenGL to use
     //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -227,9 +150,9 @@ int main(void)
     // note that we’re translating the scene in the reverse direction
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
     // Pass uniforms to the vertex shader
-    ourShader.setMat4("view", view);
-    ourShader.setMat4("model", model);
-    ourShader.setMat4("proj", proj);
+    simpleShader.setMat4("view", view);
+    simpleShader.setMat4("model", model);
+    simpleShader.setMat4("proj", proj);
 
 
 
@@ -260,14 +183,14 @@ int main(void)
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         // now render the triangle
-        ourShader.use();
-        ourShader.setColor("ourColor", 0.0f, 0.0f, 1.0f);
+        simpleShader.use();
+        simpleShader.setColor("ourColor", 0.0f, 0.0f, 1.0f);
 
         // Camera
         proj = glm::perspective(glm::radians(camera.Zoom), (float)windowWidth / (float)windowHeight, 0.1f, 100.0f);
         view = glm::lookAt(camera.Position, camera.Position + camera.Front, camera.Up);
-        ourShader.setMat4("view", view);
-        ourShader.setMat4("proj", proj);
+        simpleShader.setMat4("view", view);
+        simpleShader.setMat4("proj", proj);
 
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 10; i++)
@@ -276,7 +199,7 @@ int main(void)
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-            ourShader.setMat4("model", model);
+            simpleShader.setMat4("model", model);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
@@ -294,7 +217,7 @@ int main(void)
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     //glDeleteBuffers(1, &EBO);
-    ourShader.deleteProgram();
+    simpleShader.deleteProgram();
 
     glfwTerminate();
     return 0;

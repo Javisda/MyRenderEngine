@@ -409,8 +409,10 @@
     <ClInclude Include="src\glm\vec3.hpp" />
     <ClInclude Include="src\glm\vec4.hpp" />
     <ClInclude Include="src\glm\vector_relational.hpp" />
+    <ClInclude Include="src\Objects\Cube.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\stb_image\stb_image.h" />
+    <ClInclude Include="src\TextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Textures\goofy.png" />

@@ -1,12 +1,12 @@
 ﻿  Application.cpp
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(25,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(25,36): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(240,28): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(330,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(331,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(335,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(336,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(337,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(338,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(344,31): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(27,13): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(27,36): warning C4244: 'inicializando': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(167,28): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(257,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(258,17): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(262,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(263,19): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(264,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(265,13): warning C4244: '=': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\javis\Desktop\MyRenderEngine\MyRenderEngine\src\Application.cpp(271,31): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
   MyRenderEngine.vcxproj -> C:\Users\javis\Desktop\MyRenderEngine\x64\Debug\MyRenderEngine.exe
