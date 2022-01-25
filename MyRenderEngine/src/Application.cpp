@@ -69,9 +69,8 @@ int main(void)
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // This captures (stays within the center of the window) the cursor and hide it once the application has focus.
 
     // Creating the shaders
-    Shader simpleShader("src/Shaders/shader.vs", "src/Shaders/shader.fs");
-    Shader lightShader("src/Shaders/lightShader.vs", "src/Shaders/lightShader.fs");
-
+    Shader simpleTextureShader("src/Shaders/simpleTextureShader.vs", "src/Shaders/simpleTextureShader.fs");
+    Shader simpleShader("src/Shaders/simpleShader.vs", "src/Shaders/simpleShader.fs");
 
     glm::vec3 cubePositions[] = {
         glm::vec3(0.0f, 0.0f, 0.0f),
@@ -98,38 +97,39 @@ int main(void)
     unsigned int texture2 = tex2->generateSimpleRGBATexture();
 
     // Setting up the next, we make sure each uniform sampler correspond to the proper texture unit
-    simpleShader.use(); // don't forget to activate/use the shader before setting uniforms!
-    simpleShader.setInt("texture1", 0);
-    simpleShader.setInt("texture2", 1);
+    simpleTextureShader.use(); // don't forget to activate/use the shader before setting uniforms!
+    simpleTextureShader.setInt("texture1", 0);
+    simpleTextureShader.setInt("texture2", 1);
 
 
+    // No lo vamos a usar de momento. VAO para simpleTextureShader
+    /*
     unsigned int VAO;
     glGenVertexArrays(1, &VAO);
-
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
-    //unsigned int EBO;
-    //glGenBuffers(1, &EBO);
-
-    // 1. bind Vertex Array Object
     glBindVertexArray(VAO);
-    // 2. copy our vertices array in a buffer for OpenGL to use
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube.vertices), cube.vertices, GL_STATIC_DRAW);
-    // 3. copy our index array in a element buffer for OpenGL to use
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-    // 4. then set the vertex attributes pointers
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube.verticesAndTexCoords), cube.verticesAndTexCoords, GL_STATIC_DRAW);
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // texCoord attribute
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-
     glBindVertexArray(0);
+    */
+
+    unsigned int VAO;
+    glGenVertexArrays(1, &VAO);
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube.verticesPositions), cube.verticesPositions, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // Wireframe mode
     
@@ -150,6 +150,11 @@ int main(void)
     // note that we’re translating the scene in the reverse direction
     view = glm::translate(view, glm::vec3(0.0f, 0.0f, -5.0f));
     // Pass uniforms to the vertex shader
+    simpleTextureShader.setMat4("view", view);
+    simpleTextureShader.setMat4("model", model);
+    simpleTextureShader.setMat4("proj", proj);
+
+    simpleShader.use();
     simpleShader.setMat4("view", view);
     simpleShader.setMat4("model", model);
     simpleShader.setMat4("proj", proj);
@@ -183,14 +188,20 @@ int main(void)
         glBindTexture(GL_TEXTURE_2D, texture2);
 
         // now render the triangle
-        simpleShader.use();
-        simpleShader.setColor("ourColor", 0.0f, 0.0f, 1.0f);
+        simpleTextureShader.use();
+        simpleTextureShader.setColor("ourColor", 0.0f, 0.0f, 1.0f);
 
         // Camera
         proj = glm::perspective(glm::radians(camera.Zoom), (float)windowWidth / (float)windowHeight, 0.1f, 100.0f);
         view = glm::lookAt(camera.Position, camera.Position + camera.Front, camera.Up);
+        simpleTextureShader.setMat4("view", view);
+        simpleTextureShader.setMat4("proj", proj);
+
+
+        simpleShader.use();
         simpleShader.setMat4("view", view);
         simpleShader.setMat4("proj", proj);
+        simpleShader.setColor("outColor", 1.0f, 0.0f, 0.0f);
 
         glBindVertexArray(VAO);
         for (unsigned int i = 0; i < 10; i++)
@@ -199,7 +210,9 @@ int main(void)
             model = glm::translate(model, cubePositions[i]);
             float angle = 20.0f * i;
             model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            simpleTextureShader.setMat4("model", model);
             simpleShader.setMat4("model", model);
+            simpleShader.setColor("outColor", 1.0f, (float)i/10.0, 0.0f);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
@@ -217,7 +230,7 @@ int main(void)
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     //glDeleteBuffers(1, &EBO);
-    simpleShader.deleteProgram();
+    simpleTextureShader.deleteProgram();
 
     glfwTerminate();
     return 0;

@@ -23,8 +23,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\Shaders\shader.fs" />
-    <None Include="src\Shaders\shader.vs" />
+    <None Include="src\Shaders\simpleTextureShader.fs" />
+    <None Include="src\Shaders\simpleTextureShader.vs" />
     <None Include="src\glm\detail\func_common.inl">
       <Filter>Archivos de encabezado</Filter>
     </None>
@@ -358,6 +358,8 @@
     <None Include="src\glm\gtx\wrap.inl">
       <Filter>Archivos de encabezado</Filter>
     </None>
+    <None Include="src\Shaders\simpleShader.fs" />
+    <None Include="src\Shaders\simpleShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
